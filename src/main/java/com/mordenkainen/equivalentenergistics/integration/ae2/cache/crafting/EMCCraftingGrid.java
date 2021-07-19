@@ -141,7 +141,7 @@ public class EMCCraftingGrid implements IEMCCraftingGrid {
         final Iterator<Wrapper<ItemStack>> iter = patternList.keySet().iterator();
         while (iter.hasNext()) {
             final Wrapper<ItemStack> wrappedStack = iter.next();
-            if (Integration.emcHandler.hasEMC(wrappedStack.get())) {
+            if (Integration.emcHandler.hasEMC(wrappedStack.get()) && patternList.get(wrappedStack) != null) {
                 final EMCCraftingPattern pattern = patternList.get(wrappedStack);
                 pattern.rebuildPattern();
                 if (!pattern.valid) {
