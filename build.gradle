@@ -1,9 +1,12 @@
 buildscript {
     repositories {
-        mavenCentral()
+		// [HTTPS FIX] Replace mavenCentral() with the code block below
+        maven {
+            url "https://repo1.maven.org/maven2" 
+        }
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://files.minecraftforge.net/maven"
         }
         maven {
             name = "sonatype"
@@ -14,7 +17,18 @@ buildscript {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
 }
-
+// [HTTPS FIX] Add the code block below
+allprojects {
+    repositories {
+        all { ArtifactRepository repo ->
+            if (repo instanceof MavenArtifactRepository){
+                if (repo.url.toString().startsWith("http://repo1.maven.org/maven2")) {
+                    repo.url = repo.url.toString().replace("http://", "https://")
+                }
+            }
+        }
+    }
+}
 apply plugin: 'forge'
 
 version = "${mod_version}"
@@ -32,7 +46,7 @@ minecraft {
 repositories {
     maven {
         name 'Mobius Repo'
-        url "http://default.mobiusstrip.eu/maven"
+        url "https://www.mobiusstrip.eu/maven"
     }
     maven {
         name 'CB Repo'
