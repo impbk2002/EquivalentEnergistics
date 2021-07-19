@@ -6,7 +6,7 @@ buildscript {
         }
         maven {
             name = "forge"
-            url = "https://files.minecraftforge.net/maven"
+            url = "http://files.minecraftforge.net/maven"
         }
         maven {
             name = "sonatype"
@@ -28,6 +28,7 @@ allprojects {
             }
         }
     }
+
 }
 apply plugin: 'forge'
 
@@ -45,12 +46,15 @@ minecraft {
 
 repositories {
     maven {
+		url "https://repo1.maven.org/maven2" 
+	}
+    maven {
         name 'Mobius Repo'
         url "https://www.mobiusstrip.eu/maven"
     }
     maven {
         name 'CB Repo'
-        url "http://chickenbones.net/maven/"
+        url "https://chickenbones.net/maven/"
     }
     ivy {
         name 'ProjectE'
@@ -62,6 +66,14 @@ repositories {
         ivyPattern "https://maven.tterrag.com/[module]-[revision].[ext]"
         artifactPattern "http://media.forgecdn.net/files/${ae2_cf}/[module]-[revision].[ext]"
     }
+    maven {
+        name 'CB Maven FS'
+        url "https://chickenbones.net/maven/"
+    }
+    maven {
+        name 'ForgeFS'
+        url 'https://files.minecraftforge.net/maven'
+     }
 }
 
 jar {
@@ -71,17 +83,14 @@ jar {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
     compile "codechicken:CodeChickenLib:${minecraft_version}-${ccl_version}:dev"
     compile "codechicken:CodeChickenCore:${minecraft_version}-${ccc_version}:dev"
     compile "codechicken:NotEnoughItems:${minecraft_version}-${nei_version}:dev"
     compile "mcp.mobius.waila:Waila:${waila_version}_${minecraft_version}:dev"
-    compile ("com.pahimar.ee3:EquivalentExchange3:${minecraft_version}-${ee3_version}:dev"){
-        transitive = false
-    }
-    compile ("appeng:appliedenergistics2:${ae2_version}:api"){
-        transitive = false
-    }
-    compile name: 'ProjectE', version: "${pe_version}", ext: 'jar'
+    //compile ("com.pahimar.ee3:EquivalentExchange3:${minecraft_version}-${ee3_version}:dev"){transitive = false}
+    //compile ("appeng:appliedenergistics2:${ae2_version}:api"){transitive = false}
+    //compile name: 'ProjectE', version: "${pe_version}", ext: 'jar'
     // you may put jars on which you depend on in ./libs
     // or you may define them like so..
     //compile "some.group:artifact:version:classifier"
